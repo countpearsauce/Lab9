@@ -69,9 +69,9 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
+      <button id="log">Console Log</button>
+      <button id="error">Console Error</button>
+      <button id="count">Console Count</button>
       <button>Console Warn</button>
       <button>Console Assert</button>
       <button>Console Clear</button>
@@ -87,6 +87,16 @@
     </section>
   </main>
 
+  <!--copied from trackjs-->
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "5a1a6354cfb046ba9c2ffc905bd2ce13"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+                        
+  </script>
+                        
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -102,6 +112,117 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    // ES6 Modular JavaScript. 
+    // npm install trackjs --save
+    // copied from trackjs
+    
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+      // ... handle error ...
+      TrackJS.track(`Uncaught error of type ${error} on line ${lineNo}, column ${columnNo}: ${msg}`);
+      return false;
+
+    }
+
+    //console.log
+    errorBtns[0].addEventListener('click', function () {
+      console.log('Console Log button pressed');
+    });
+
+    //console.error
+    errorBtns[1].addEventListener('click', function () {
+      console.error('Console error button pressed');
+    });
+
+    //console.count
+    errorBtns[2].addEventListener('click', function () {
+      console.count('Console count button pressed');
+    });
+
+    //console.warn
+    errorBtns[3].addEventListener('click', function () {
+      console.warn('Console warn button pressed');
+    });
+
+    //console.assert
+    errorBtns[4].addEventListener('click', function () {
+      console.assert(2 < 1, 'Console assert button pressed, and 2 is not less than 1');
+    });
+
+    //console.clear
+    errorBtns[5].addEventListener('click', function () {
+      console.clear('Console clear button pressed');
+    });
+
+    //console.dir
+    errorBtns[6].addEventListener('click', function () {
+      console.dir(errorBtns[6]);
+    });
+
+    //console.dirxml
+    errorBtns[7].addEventListener('click', function () {
+      console.dir(document);
+    });
+
+    //console.group
+    errorBtns[8].addEventListener('click', function () {
+      console.group('Console Group started')
+    });
+
+    //console.groupEnd
+    errorBtns[9].addEventListener('click', function () {
+      console.groupEnd('Console Group started')
+    });
+
+    //console.table
+    errorBtns[10].addEventListener('click', function () {
+      console.table(errorBtns);
+    });
+
+    //console.time
+    errorBtns[11].addEventListener('click', function () {
+      console.time();
+    });
+
+    //console.timeEnd
+    errorBtns[12].addEventListener('click', function () {
+      console.timeEnd();
+    });
+
+    //console.trace
+    errorBtns[13].addEventListener('click', function () {
+      console.trace();
+    });
+
+    //global error
+    errorBtns[14].addEventListener('click', function () {
+      throw 'Throw global error';
+    });
+
+    try {
+      errorBtns[15].addEventListener('click', function () {
+        console.log('added a 16th button');
+      });
+    } catch (error) {
+      console.warn('Warning: Could not generate button 16!', error);
+    } finally {
+      console.log('Have a nice day');
+    }
+
+    class ScreamError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "ScreamError";
+        this.message = ('!!!' + (this.message).toUpperCase() + '!!!');
+      }
+    }
+
+    throw new ScreamError('happy thanksgiving');
+
+
+
+
+
   </script>
 </body>
 
